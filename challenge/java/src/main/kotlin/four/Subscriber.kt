@@ -1,4 +1,0 @@
-package four
-
-class Subscriber {
-}

@@ -36,3 +36,18 @@ send() - batching - awaits send - retry - back off
 
 Avro (an other apache open source project) used for serialization of the data.
 It's like an optimized json, faster to process and more robust.
+
+## Topics
+
+### Create topic
+
+> Do not create topics starting with `_` which is for offsets topics.
+
+```bash
+kafka-topics \
+--create \
+--bootstrap-server kafka:9092 \
+--partitions 6 \
+--replication-factor 1 \
+--topic vehicle-positions
+```
