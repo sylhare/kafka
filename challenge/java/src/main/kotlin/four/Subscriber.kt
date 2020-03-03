@@ -1,0 +1,4 @@
+package four
+
+class Subscriber {
+}

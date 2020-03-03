@@ -1,4 +1,4 @@
-#/bin/bash
+#!/usr/bin/env bash
 if [ "$HOSTNAME" = tools ]; then
   echo "We don't need to update hosts in the tools container. Exiting."
   exit 1
