@@ -15,6 +15,8 @@ Make sure to add an extra 6Go to your docker to run it.
 docker-compose up -d
 # Execute commands
 docker-compose exec tools /bin/bash
+cd ~/confluent-dev/labs/
+gradle run
 # Remove
 docker-compose down -v
 ```
