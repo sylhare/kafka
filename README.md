@@ -1,10 +1,6 @@
-# Confluent Apache Kafka for Developers Course
+# Confluent Apache Kafka for Developers
 
-This is the source code accompanying the **Confluent Apache Kafka for Developers** course.
-
-It is organized in two subfolders `solution` and `labs`. 
-The former contains the complete sample solution for each exercise whilst the latter contains the scaffoliding for 
-each exercise and is meant to be used and elaborated on by the students during the hands-on.
+Source code and example on how to use Kafka for developers by Confluent.
 
 ## Running
 
@@ -24,7 +20,7 @@ docker-compose down -v
 ## Configuration Elements
 
 ACK -> Acknowledge. There are three settings :
-  - `acks=0` will not wait for the acknowledgement of the server
+  - `acks=0` will not wait for the acknowledgement of the serverAvro
   - `acks=1` will wait for the leader to write on local log
   - `ack=all` Producer will wait for all in sync replicas to have acknowledged the receipt of the record
 
@@ -48,7 +44,7 @@ It's like an optimized json, faster to process and more robust.
 ```bash
 kafka-topics \
 --create \
---bootstrap-server kafka:9092 \
+--bootstrap-serverAvro kafka:9092 \
 --partitions 6 \
 --replication-factor 1 \
 --topic vehicle-positions
