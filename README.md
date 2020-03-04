@@ -63,11 +63,32 @@ send() - batching - awaits send - retry - back off
 
 
 ## Data Format
-
+### Definition
 Kafka don't do well with big files `message.max.bytes` is recommended to 1mb.
+Plain text is not very efficient, everything needs to be converted to text.
+We want to use a schema to structure the data.
 
 Avro (an other apache open source project) used for serialization of the data.
 It's like an optimized json, faster to process and more robust.
+
+### Implementation
+To generate automatically the classes for avro you can use the [gradle-avro-plugin](https://github.com/davidmc24/gradle-avro-plugin).
+Once you have your schemes in `./src/main/avro`. 
+In your `build.gradle.kts` you need to add:
+```kotlin
+plugins {
+    id("com.commercehub.gradle.plugin.avro") version "0.9.1"
+}
+repositories {
+    maven ("https://dl.bintray.com/gradle/gradle-plugins")
+}
+```
+
+Then you can run the task that will create the classes:
+```bash
+gradle generateAvroJava
+```
+
 
 ## Topics
 

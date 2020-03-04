@@ -38,11 +38,6 @@ class KafkaTest {
     server.stop()
   }
 
-  @Test
-  internal fun hmm() {
-    assertTrue(true)
-  }
-
   @Disabled
   @Test
   @Throws(java.lang.Exception::class)

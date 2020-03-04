@@ -1,0 +1,3 @@
+{
+    "schema": "{\"type\":\"record\",\"namespace\":\"six.model\", \"name\":\"foo\", \"fields\":[{\"name\":\"bar\",\"type\":\"string\"}]}"
+}

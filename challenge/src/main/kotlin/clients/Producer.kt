@@ -12,8 +12,6 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
 
-
-
 fun main(args: Array<String>) {
   println("Starting producer.")
   // Load a driver id from an environment variable

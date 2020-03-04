@@ -1,4 +1,4 @@
-{"namespace": "clients.avro",
+{"namespace": "six.model",
     "type": "record",
     "name": "PositionDistance",
     "fields": [
