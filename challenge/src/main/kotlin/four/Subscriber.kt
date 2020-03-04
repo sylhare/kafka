@@ -11,7 +11,7 @@ class Subscriber(private var producer: KafkaProducer<String, String>) : MqttCall
 
   private val mqttQOS = 1
   private val host = "ssl://mqtt.hsl.fi:8883"
-  private val clientId = "MQTT-Java-Example"
+  private val clientId = "MQTT-Example"
   private val mqttTopic = "/hfp/v2/journey/ongoing/vp/#"
   private val kafkaTopic = "vehicle-positions"
   private lateinit var client: MqttClient

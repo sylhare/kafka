@@ -10,6 +10,7 @@ Producer writes to a `topic`.
 Consumers polls and reads the messages from `topic`.
 Messages can be read multiple times depending on your retention policy. (Which offsets when you are going to read from) 
 
+
 ### with Broker
 
 `Topics` are more efficient when they are on multiple `partitions`. 
@@ -27,6 +28,8 @@ You can set a replica factor so that you will have a replica of each of the Topi
 Ideally you set it to three, those wil create ISR `in sync replicas`.
 
 The data retention is made with the segments which are files that stores/logs the events that have been sent on the partition.
+Messages that are read are said to be `committed` to the log. So we know which message has been listened to and when.
+If a consumer fails to read a message, another consumer can review the log to start back at the right event in the queue.
 
 
 
@@ -73,10 +76,13 @@ It's like an optimized json, faster to process and more robust.
 > Do not create topics starting with `_` which is for offsets topics.
 
 ```bash
+# create / modify
+# --partitions Number of partition for the topic
+# --replication-factor For durability, default is 1
 kafka-topics \
---create \                                  # create / modify
+--create \
 --bootstrap-server kafka:9092 \
---partitions 6 \                            # Number of partition for the topic
---replication-factor 2 \                    # For durability, default is 1
+--partitions 6 \
+--replication-factor 1 \
 --topic vehicle-positions
 ```

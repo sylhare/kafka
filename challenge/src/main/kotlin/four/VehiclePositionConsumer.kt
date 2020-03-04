@@ -22,7 +22,7 @@ fun main(args: Array<String>) {
     consumer.subscribe(listOf("vehicle-positions"))
     while (true) {
       val records: ConsumerRecords<String, String> = consumer.poll(Duration.ofMillis(100))
-      records.forEach { ("offset = ${it.offset()}, key = ${it.key()}, value = ${it.value()}\n") }
+      records.forEach { print("offset = ${it.offset()}, key = ${it.key()}, value = ${it.value()}\n") }
     }
   } finally {
     println("*** Ending VP Consumer ***")

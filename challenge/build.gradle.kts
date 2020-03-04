@@ -8,7 +8,7 @@ plugins {
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
-application.mainClassName = "four.VehiclePositionConsumerKt"
+application.mainClassName = "four.VehiclePositionProducerKt"
 
 repositories {
     mavenCentral()
