@@ -5,10 +5,10 @@ import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer
-import java.time.Duration
-import java.util.*
 import six.model.PositionKey
 import six.model.PositionValue
+import java.time.Duration
+import java.util.*
 
 fun main(args: Array<String>) {
   println("*** Starting VP Consumer Avro ***")

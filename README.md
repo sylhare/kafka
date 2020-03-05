@@ -84,9 +84,9 @@ repositories {
 }
 ```
 
-Then you can run the task that will create the classes:
+Then you can run the task that will create the classes then build using:
 ```bash
-gradle generateAvroJava
+gradle generateAvroJava build
 ```
 
 
