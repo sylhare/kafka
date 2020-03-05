@@ -32,17 +32,19 @@ object VehiclePositionTransformer {
     streams.start()
   }
 
-  private val topology: Topology get() {
+  private val topology: Topology
+    get() {
       val stringSerde = Serdes.String()
       val vpSerde = jsonSerde
       val builder = StreamsBuilder()
       val positions = builder.stream("vehicle-positions", Consumed.with(stringSerde, vpSerde))
-    val operator47Only = positions.filter { key: String?, value: VehiclePosition -> value.VP!!.oper == 47 }
-    operator47Only.to("vehicle-positions-oper-47", Produced.with(stringSerde, vpSerde))
+      val operator47Only = positions.filter { _: String?, value: VehiclePosition -> value.VP!!.oper == 47 }
+      operator47Only.to("vehicle-positions-oper-47", Produced.with(stringSerde, vpSerde))
       return builder.build()
     }
 
-  private val jsonSerde: Serde<VehiclePosition> get() {
+  private val jsonSerde: Serde<VehiclePosition>
+    get() {
       val serdeProps: MutableMap<String, Any?> = HashMap()
       serdeProps["json.value.type"] = VehiclePosition::class.java
       val vpSerializer: Serializer<VehiclePosition> = KafkaJsonSerializer()
