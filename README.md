@@ -104,6 +104,20 @@ schema-registry:8081/subjects/sample/versions
 #
 ```
 
+### Stream and table
+
+Check out more on [Confluent: Kafka Streams and Tables](https://www.confluent.io/blog/kafka-streams-tables-part-1-event-streaming/).
+`Stream` represents an history of events and are immutable data.
+`Table` represents a state and are mutable.
+
+Watch the transformed stream.
+```bash
+kafka-console-consumer \
+--bootstrap-server kafka:9092 \
+--topic vehicle-positions-oper-47 \
+--from-beginning
+```
+
 ## Topics
 
 ### Create topic
@@ -120,6 +134,4 @@ kafka-topics \
 --partitions 6 \
 --replication-factor 1 \
 --topic vehicle-positions
-
-kafka-topics --create --bootstrap-server kafka:9092 --partitions 6 --replication-factor 1 --topic vehicle-positions-avro
 ```
