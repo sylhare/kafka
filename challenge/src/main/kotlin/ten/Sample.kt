@@ -1,0 +1,4 @@
+package ten
+
+class Sample {
+}

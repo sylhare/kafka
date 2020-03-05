@@ -2,6 +2,29 @@
 
 Source code and example on how to use Kafka for developers by Confluent.
 
+## Setup
+
+Make sure to add an extra 6Go to your docker to run it.
+
+```bash
+# Build
+docker-compose up -d
+# Execute commands
+docker-compose exec tools /bin/bash
+cd ~/confluent-dev/labs/
+# Set up the topics
+./start.sh 
+# If not using directly your IDE, run the project with
+gradle run
+# Remove
+docker-compose down -v
+```
+
+Don't forget to add in your `/etc/hosts` the following:
+```
+127.0.0.1       localhost kafka training avro schema-registry ksql-training
+```
+
 ## Introduction to Kafka
 
 ### Topics
@@ -23,34 +46,18 @@ it will use this key to define the partition example:
 > Which mean message of key 7 will go to partition 2 in this case.
 ```
 
+### Replicas 
+
 You can set a replica factor so that you will have a replica of each of the Topic partition in the other brokers.
 Ideally you set it to three, those wil create ISR `in sync replicas`.
+
+The event is first sent to the leader then when it has committed on the transaction log, the event is sent to the next follower.
+Replicas are identical up to a specified point called the high-water mark which correspond to the last committed message.
+After each event processed by the leader it will then rise the high water mark for the replicas to process.
 
 The data retention is made with the segments which are files that stores/logs the events that have been sent on the partition.
 Messages that are read are said to be `committed` to the log. So we know which message has been listened to and when.
 If a consumer fails to read a message, another consumer can review the log to start back at the right event in the queue.
-
-
-
-## Running
-
-Make sure to add an extra 6Go to your docker to run it.
-
-```bash
-# Build
-docker-compose up -d
-# Execute commands
-docker-compose exec tools /bin/bash
-cd ~/confluent-dev/labs/
-gradle run
-# Remove
-docker-compose down -v
-```
-
-Don't forget to add in your `/etc/hosts` the following:
-```
-127.0.0.1       localhost kafka training avro schema-registry
-```
 
 ## Configuration Elements
 
@@ -116,6 +123,11 @@ kafka-console-consumer \
 --bootstrap-server kafka:9092 \
 --topic vehicle-positions-oper-47 \
 --from-beginning
+```
+
+KSQL is an API for the Kafka Streams which is also an API from the Producer / Consumer.
+```bash
+ksql http://ksql-server:8088
 ```
 
 ## Topics

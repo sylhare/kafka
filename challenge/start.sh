@@ -29,6 +29,12 @@ kafka-topics --zookeeper zookeeper:2181 \
     --partitions 6 \
     --replication-factor 1
 
+kafka-topics --zookeeper zookeeper:2181 \
+    --create \
+    --topic tram-door-status-changed \
+    --partitions 6 \
+    --replication-factor 1
+
 cat << EOF | kafka-console-producer \
     --broker-list kafka:9092 \
     --topic operators \
