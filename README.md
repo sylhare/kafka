@@ -10,7 +10,6 @@ Producer writes to a `topic`.
 Consumers polls and reads the messages from `topic`.
 Messages can be read multiple times depending on your retention policy. (Which offsets when you are going to read from) 
 
-
 ### with Broker
 
 `Topics` are more efficient when they are on multiple `partitions`. 
@@ -46,6 +45,11 @@ cd ~/confluent-dev/labs/
 gradle run
 # Remove
 docker-compose down -v
+```
+
+Don't forget to add in your `/etc/hosts` the following:
+```
+127.0.0.1       localhost kafka training avro schema-registry
 ```
 
 ## Configuration Elements
@@ -89,6 +93,16 @@ Then you can run the task that will create the classes then build using:
 gradle generateAvroJava build
 ```
 
+You will need to register the Avro schemas to the registry:
+```bash
+cd ~/confluent-dev/labs/src/main/resources/schemas/
+# Register the schema
+curl -X POST \
+-H "Content-Type: application/vnd.schemaregistry.v1+json" \
+--data @sample-schema-v2.json \
+schema-registry:8081/subjects/sample/versions
+#
+```
 
 ## Topics
 
@@ -106,4 +120,6 @@ kafka-topics \
 --partitions 6 \
 --replication-factor 1 \
 --topic vehicle-positions
+
+kafka-topics --create --bootstrap-server kafka:9092 --partitions 6 --replication-factor 1 --topic vehicle-positions-avro
 ```
