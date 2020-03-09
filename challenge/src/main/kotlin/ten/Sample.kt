@@ -27,20 +27,16 @@ object Sample {
         records.forEach {
           print("offset = ${it.offset()}, key = ${it.key()}, value = ${it.value()}\n")
           val node = it.value()
-          val operator = node["OPER"].asText()
-          val designation = node["DESI"].asText()
-          val vehicleNo = node["VEH"].asText()
-          val doorStatus = node["DRST"].asInt()
+          val operator = node["oper"].asText()
+          val designation = node["desi"].asText()
+          val vehicleNo = node["veh"].asText()
+          val doorStatus = node["drst"].asInt()
           // assume combination of operator and vehicleNo is unique
           val key = "$operator|$vehicleNo"
           var hasChanged = true
-          if (cache.containsKey(key)) {
-            val prevDoorStatus = cache[key]!!
-            hasChanged = prevDoorStatus != doorStatus
-          }
-          if (hasChanged) {
-            publishEvent(producer, operator, designation, vehicleNo, doorStatus)
-          }
+
+          if (cache.containsKey(key)) hasChanged = cache[key] != doorStatus
+          if (hasChanged) publishEvent(producer, operator, designation, vehicleNo, doorStatus)
           cache[key] = doorStatus
         }
       }

@@ -20,9 +20,6 @@ object VehiclePositionTransformer {
   fun main(args: Array<String>) {
     println(">>> Starting the vp-streams-app Application")
 
-    val settings = Properties()
-    settings[StreamsConfig.APPLICATION_ID_CONFIG] = "vp-streams-app"
-    settings[StreamsConfig.BOOTSTRAP_SERVERS_CONFIG] = "kafka:9092"
     val topology = topology
     val streams = KafkaStreams(topology, settings)
     Runtime.getRuntime().addShutdownHook(Thread(Runnable {
@@ -30,6 +27,13 @@ object VehiclePositionTransformer {
       streams.close()
     }))
     streams.start()
+  }
+
+  private val settings: Properties get(){
+    val settings = Properties()
+    settings[StreamsConfig.APPLICATION_ID_CONFIG] = "vp-streams-app"
+    settings[StreamsConfig.BOOTSTRAP_SERVERS_CONFIG] = "kafka:9092"
+    return settings
   }
 
   private val topology: Topology
