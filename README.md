@@ -1,6 +1,9 @@
 # Confluent Apache Kafka for Developers
 
-Source code and example on how to use Kafka for developers by Confluent.
+![kafka](logo.png)
+
+Source code and example on how to use Kafka for developers in kotlin,
+inspired by [Confluent](https://github.com/confluentinc/training-developer-src).
 
 ## Setup
 
@@ -75,6 +78,7 @@ send() - batching - awaits send - retry - back off
 
 ## Data Format
 ### Definition
+
 Kafka don't do well with big files `message.max.bytes` is recommended to 1mb.
 Plain text is not very efficient, everything needs to be converted to text.
 We want to use a schema to structure the data.
@@ -83,6 +87,7 @@ Avro (an other apache open source project) used for serialization of the data.
 It's like an optimized json, faster to process and more robust.
 
 ### Implementation
+
 To generate automatically the classes for avro you can use the [gradle-avro-plugin](https://github.com/davidmc24/gradle-avro-plugin).
 Once you have your schemes in `./src/main/avro`. 
 In your `build.gradle.kts` you need to add:
@@ -126,6 +131,7 @@ kafka-console-consumer \
 ```
 
 KSQL is an API for the Kafka Streams which is also an API from the Producer / Consumer.
+KSQL is mostly for people who don't want / need to write code/ use the Java Kafka Stream.
 ```bash
 ksql http://ksql-server:8088
 ```
