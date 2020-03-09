@@ -3,7 +3,6 @@ package six
 import io.confluent.kafka.serializers.KafkaAvroDeserializer
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig
 import org.apache.kafka.clients.consumer.ConsumerConfig
-import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import six.model.PositionKey
 import six.model.PositionValue
@@ -12,6 +11,22 @@ import java.util.*
 
 fun main(args: Array<String>) {
   println("*** Starting VP Consumer Avro ***")
+  val consumer: KafkaConsumer<PositionKey, PositionValue> = kafkaAvroConsumer()
+
+  try {
+    consumer.subscribe(listOf("vehicle-positions-avro"))
+    while (true) {
+      consumer.poll(Duration.ofMillis(100)).forEach {
+        print("offset = ${it.offset()}, key = ${it.key()}, value = ${it.value()}\n")
+      }
+    }
+  } finally {
+    println("*** Ending VP Consumer Avro ***")
+    consumer.close()
+  }
+}
+
+private fun kafkaAvroConsumer(): KafkaConsumer<PositionKey, PositionValue> {
   val settings = Properties()
   settings[ConsumerConfig.GROUP_ID_CONFIG] = "vp-consumer-avro"
   settings[ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG] = "kafka:9092"
@@ -21,16 +36,5 @@ fun main(args: Array<String>) {
   settings[KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG] = "true"
   settings[KafkaAvroDeserializerConfig.SCHEMA_REGISTRY_URL_CONFIG] = "http://schema-registry:8081"
 
-  val consumer: KafkaConsumer<PositionKey, PositionValue> = KafkaConsumer(settings)
-
-  try {
-    consumer.subscribe(listOf("vehicle-positions-avro"))
-    while (true) {
-      val records: ConsumerRecords<PositionKey, PositionValue> = consumer.poll(Duration.ofMillis(100))
-      records.forEach { print("offset = ${it.offset()}, key = ${it.key()}, value = ${it.value()}\n") }
-    }
-  } finally {
-    println("*** Ending VP Consumer Avro ***")
-    consumer.close()
-  }
+  return KafkaConsumer(settings)
 }

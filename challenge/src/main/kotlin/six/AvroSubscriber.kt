@@ -15,9 +15,9 @@ class AvroSubscriber(private var producer: KafkaProducer<PositionKey, PositionVa
 
   private val qos = 1
   private val host = "ssl://mqtt.hsl.fi:8883"
-  private val clientId = "MQTT-Java-Example"
-  private val topic = "/hfp/v2/journey/ongoing/vp/#"
-  private val kafka_topic = "vehicle-positions-avro"
+  private val clientId = "MQTT-Avro-Example"
+  private val mqttTopic = "/hfp/v2/journey/ongoing/vp/#"
+  private val kafkaTopic = "vehicle-positions-avro"
   private var client: MqttClient? = null
 
   @Throws(MqttException::class)
@@ -29,7 +29,7 @@ class AvroSubscriber(private var producer: KafkaProducer<PositionKey, PositionVa
     client = MqttClient(host, clientId, MemoryPersistence())
     client!!.setCallback(this)
     client!!.connect(conOpt)
-    client!!.subscribe(topic, qos)
+    client!!.subscribe(mqttTopic, qos)
   }
 
   override fun connectionLost(cause: Throwable) {
@@ -45,7 +45,7 @@ class AvroSubscriber(private var producer: KafkaProducer<PositionKey, PositionVa
       println("[$topic] ${String(message.payload)}")
       val key = PositionKey(topic)
       val value = getPositionValue(message.payload)
-      val record = ProducerRecord(kafka_topic, key, value)
+      val record = ProducerRecord(kafkaTopic, key, value)
       producer.send(record)
     } catch (e: Exception) {
       e.printStackTrace()
@@ -58,9 +58,8 @@ class AvroSubscriber(private var producer: KafkaProducer<PositionKey, PositionVa
     val json = String(payload)
     val pos: VehiclePosition = mapper.readValue(json, VehiclePosition::class.java)
     val vv: VehiclePosition.VehicleValues = pos.VP!!
-    return PositionValue(vv.desi, vv.dir, vv.oper, vv.veh, vv.tst,
-        vv.tsi, vv.spd, vv.hdg, vv.lat, vv.longitude, vv.acc, vv.dl,
-        vv.odo, vv.drst, vv.oday, vv.jrn, vv.line, vv.start, vv.loc,
+    return PositionValue(vv.desi, vv.dir, vv.oper, vv.veh, vv.tst, vv.tsi, vv.spd, vv.hdg, vv.lat,
+        vv.longitude, vv.acc, vv.dl, vv.odo, vv.drst, vv.oday, vv.jrn, vv.line, vv.start, vv.loc,
         vv.stop, vv.route, vv.occu, vv.seq)
   }
 }
