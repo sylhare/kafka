@@ -17,9 +17,8 @@ class Subscriber(private var producer: KafkaProducer<String, String>) : MqttCall
   private lateinit var client: MqttClient
 
   @Throws(MqttException::class)
-  override fun messageArrived(topic: String?, message: MqttMessage) {
-    println(String.format("[%s] %s", topic, String(message.payload)))
-    val key = topic
+  override fun messageArrived(key: String?, message: MqttMessage) {
+    println(String.format("[%s] %s", key, String(message.payload)))
     val value = String(message.payload)
     val record = ProducerRecord(kafkaTopic, key, value)
     producer.send(record)
@@ -38,8 +37,7 @@ class Subscriber(private var producer: KafkaProducer<String, String>) : MqttCall
   fun start() {
     val conOpt = MqttConnectOptions()
     conOpt.isCleanSession = true
-    val uuid = UUID.randomUUID().toString().replace("-", "")
-    val clientId = "$clientId-$uuid"
+    val clientId = "$clientId-${UUID.randomUUID().toString().replace("-", "")}"
     client = MqttClient(host, clientId, MemoryPersistence())
     client.setCallback(this)
     client.connect(conOpt)

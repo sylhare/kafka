@@ -16,8 +16,8 @@ fun main(args: Array<String>) {
   settings[ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
   settings[ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
 
-
   val consumer: KafkaConsumer<String, String> = KafkaConsumer(settings)
+
   try {
     consumer.subscribe(listOf("vehicle-positions"))
     while (true) {
