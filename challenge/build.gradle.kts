@@ -1,5 +1,17 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+
+/** Avro plugin for v0.9.1 or more
+buildscript {
+  dependencies {
+
+    classpath("com.commercehub.gradle.plugin:gradle-avro-plugin:0.16.0")
+  }
+}
+
+apply(plugin = "com.commercehub.gradle.plugin.avro")
+*/
+
 plugins {
   kotlin("jvm") version "1.3.50"
   id("com.commercehub.gradle.plugin.avro") version "0.9.1"
@@ -52,8 +64,6 @@ configurations.all {
 }
 
 
-
-
 tasks.test {
   useJUnitPlatform()
   testLogging {
@@ -66,6 +76,8 @@ tasks.withType<KotlinCompile> {
     freeCompilerArgs = listOf("-Xjsr305=strict")
     jvmTarget = "1.8"
   }
+
+  dependsOn("generateAvroJava") // So avro is generated
 }
 
 
