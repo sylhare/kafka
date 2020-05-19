@@ -1,4 +1,4 @@
-package ten
+package json
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.apache.kafka.clients.consumer.ConsumerConfig

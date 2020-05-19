@@ -1,4 +1,4 @@
-package eight
+package avro.transformer
 
 import io.confluent.kafka.serializers.KafkaJsonDeserializer
 import io.confluent.kafka.serializers.KafkaJsonSerializer
@@ -12,7 +12,7 @@ import org.apache.kafka.streams.StreamsConfig
 import org.apache.kafka.streams.Topology
 import org.apache.kafka.streams.kstream.Consumed
 import org.apache.kafka.streams.kstream.Produced
-import six.VehiclePosition
+import avro.VehiclePosition
 import java.util.*
 
 object VehiclePositionTransformer {

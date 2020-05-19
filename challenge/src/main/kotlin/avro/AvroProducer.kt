@@ -1,12 +1,12 @@
-package six
+package avro
 
 import io.confluent.kafka.serializers.KafkaAvroSerializer
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.eclipse.paho.client.mqttv3.MqttException
-import six.model.PositionKey
-import six.model.PositionValue
+import avro.model.PositionKey
+import avro.model.PositionValue
 import java.util.*
 
 @Throws(MqttException::class)

@@ -1,11 +1,11 @@
-package six
+package avro
 
 import io.confluent.kafka.serializers.KafkaAvroDeserializer
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.consumer.KafkaConsumer
-import six.model.PositionKey
-import six.model.PositionValue
+import avro.model.PositionKey
+import avro.model.PositionValue
 import java.time.Duration
 import java.util.*
 

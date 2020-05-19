@@ -1,4 +1,4 @@
-package six
+package avro
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

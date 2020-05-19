@@ -1,4 +1,4 @@
-{"namespace": "six.model",
+{"namespace": "avro.model",
     "type": "record",
     "name": "PositionKey",
     "fields": [

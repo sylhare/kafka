@@ -1,4 +1,4 @@
-package five
+package offset
 
 import org.apache.kafka.clients.consumer.ConsumerRebalanceListener
 import org.apache.kafka.clients.consumer.KafkaConsumer

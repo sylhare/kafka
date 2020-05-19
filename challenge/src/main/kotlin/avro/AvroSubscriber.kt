@@ -1,12 +1,12 @@
-package six
+package avro
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.eclipse.paho.client.mqttv3.*
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
-import six.model.PositionKey
-import six.model.PositionValue
+import avro.model.PositionKey
+import avro.model.PositionValue
 import java.io.IOException
 import java.util.*
 import kotlin.system.exitProcess
