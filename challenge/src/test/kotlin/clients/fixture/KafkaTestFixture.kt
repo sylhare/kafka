@@ -1,4 +1,4 @@
-package clients
+package clients.fixture
 
 import kafka.server.KafkaConfig
 import kafka.server.KafkaServerStartable
@@ -6,10 +6,10 @@ import org.apache.curator.test.TestingServer
 import java.io.IOException
 import java.util.*
 
-
 internal class KafkaTestFixture {
   private lateinit var zk: TestingServer
   private lateinit var kafka: KafkaServerStartable
+
   @Throws(Exception::class)
   fun start(properties: Properties) {
     val port = getZkPort(properties)

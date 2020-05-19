@@ -1,5 +1,7 @@
-package clients
+package example
 
+import clients.BOOTSTRAP_SERVER
+import clients.KAFKA_TOPIC
 import com.fasterxml.jackson.databind.deser.std.StringDeserializer
 import io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor
 import org.apache.kafka.clients.consumer.ConsumerConfig.*
