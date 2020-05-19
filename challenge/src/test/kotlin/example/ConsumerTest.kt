@@ -12,40 +12,39 @@ import kotlin.test.assertEquals
 class ConsumerTest {
 
   private lateinit var mockConsumer: MockConsumer<String, String>
-  private val request = "test"
   private val topic = "aTopic"
   private val partition = 1
-  private val consumerRecord = ConsumerRecord(topic, partition, 0, "key", request)
+  private val consumerRecord = ConsumerRecord(topic, partition, 0, "key", "test")
 
   @BeforeEach
   fun setup() {
-    MockConsumer<String, String>(OffsetResetStrategy.EARLIEST)
+    mockConsumer = MockConsumer(OffsetResetStrategy.EARLIEST)
   }
 
   @Test
   fun subscribeConsumerTest() {
     val mockService = MockService()
     val exampleConsumer = ExampleConsumer(topic, mockConsumer, mockService)
-    exampleConsumer.subscribe(topic)
-    mockConsumer.rebalance(listOf(TopicPartition(topic, partition)))
+    exampleConsumer.subscribe(topic)                                    // subscribe to a consumer group
+    mockConsumer.rebalance(listOf(TopicPartition(topic, partition)))    // "rebalance" records to that group
     mockConsumer.updateBeginningOffsets(mapOf(TopicPartition(topic, partition) to 0L))
     exampleConsumer.poll()
     mockConsumer.addRecord(consumerRecord)
     Thread.sleep(500)
     exampleConsumer.stop()
-    assertEquals(mockService.receivedRequest, request)
+    assertEquals("test", mockService.receivedRequest)
   }
 
   @Test
   fun noSubscribeConsumerTest() {
     val mockService = MockService()
     val exampleConsumer = ExampleConsumer(topic, mockConsumer, mockService)
-    mockConsumer.assign(listOf(TopicPartition(topic, partition)))
+    mockConsumer.assign(listOf(TopicPartition(topic, partition)))     // Assign consumer to a topic to add the records to
     mockConsumer.updateBeginningOffsets(mapOf(TopicPartition(topic, partition) to 0L))
     exampleConsumer.poll()
     mockConsumer.addRecord(consumerRecord)
     Thread.sleep(500)
     exampleConsumer.stop()
-    assertEquals(mockService.receivedRequest, request)
+    assertEquals("test", mockService.receivedRequest)
   }
 }
