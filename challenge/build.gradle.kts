@@ -20,7 +20,7 @@ plugins {
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
-application.mainClassName = "four.VehiclePositionProducerKt"
+application.mainClassName = "subscriber.VehiclePositionProducerKt"
 
 repositories {
   jcenter()
@@ -33,8 +33,10 @@ dependencies {
   implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0")
   implementation("org.apache.kafka:kafka-clients:2.3.0")
   implementation("org.apache.kafka:kafka-streams:2.3.0")
-  implementation("org.apache.avro:avro:1.8.2")
-  implementation("org.apache.avro:avro-tools:1.8.2")
+  implementation("org.apache.avro:avro:1.9.2")
+  implementation("org.apache.avro:avro-tools:1.9.2"){
+    exclude("ch.qos.logback", "logback-classic")
+  }
 
   implementation("io.confluent:monitoring-interceptors:5.3.0")
   implementation("io.confluent:kafka-avro-serializer:5.3.0")
@@ -51,6 +53,14 @@ dependencies {
   testImplementation("org.apache.curator:curator-test:2.8.0")
   testImplementation("org.apache.kafka:kafka_2.10:0.8.2.1")
 
+}
+
+configurations.all {
+  resolutionStrategy.eachDependency {
+    if (this.requested.name == "log4j") {
+      //this.useTarget("org.slf4j:log4j-over-slf4j:1.7.5")
+    }
+  }
 }
 
 sourceSets {
