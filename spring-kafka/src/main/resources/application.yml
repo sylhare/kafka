@@ -1,11 +1,11 @@
 spring:
-  jmx:
-    enabled: true
   kafka:
     consumer:
       bootstrap-servers: localhost:9092
       group-id: foo-group
       auto-offset-reset: earliest
+      properties:
+        spring.json.trusted.packages: "spring.entity"
     producer:
       bootstrap-servers: localhost:9092
 
@@ -17,6 +17,11 @@ app:
   topic:
     producer: "producer.topic"
     consumer: "consumer.topic"
+  source:
+    - "https://memorynotfound.com/spring-kafka-json-serializer-deserializer-example/"
+    - "https://blog.mimacom.com/testing-apache-kafka-with-spring-boot/"
+    - "https://blog.mimacom.com/testing-apache-kafka-with-spring-boot-junit5/"
+    - "https://docs.spring.io/spring-kafka/reference/html/#annotation-error-handling"
 
 management:
   server:
@@ -30,9 +35,3 @@ logging:
     root: WARN
     org.springframework.web: INFO
     com.memorynotfound: DEBUG
-
-source:
-  - "https://memorynotfound.com/spring-kafka-json-serializer-deserializer-example/"
-  - "https://blog.mimacom.com/testing-apache-kafka-with-spring-boot/"
-  - "https://blog.mimacom.com/testing-apache-kafka-with-spring-boot-junit5/"
-  - "https://docs.spring.io/spring-kafka/reference/html/#annotation-error-handling"
