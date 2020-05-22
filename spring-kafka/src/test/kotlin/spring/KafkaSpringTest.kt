@@ -17,6 +17,8 @@ import org.springframework.kafka.test.EmbeddedKafkaBroker
 import org.springframework.kafka.test.context.EmbeddedKafka
 import org.springframework.kafka.test.utils.KafkaTestUtils
 import org.springframework.test.context.junit4.SpringRunner
+import spring.bus.FooConsumer
+import spring.bus.FooProducer
 import java.util.*
 
 @RunWith(SpringRunner::class)

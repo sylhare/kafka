@@ -14,14 +14,9 @@ import org.springframework.kafka.core.*
 import org.springframework.kafka.support.serializer.JsonDeserializer
 import org.springframework.kafka.support.serializer.JsonSerializer
 import spring.Foo.Companion.invalid
+import spring.entity.Foo
+import spring.entity.Foo.Companion.invalid
 
-data class Foo(private val name: String, private val description: String) {
-    constructor() : this("default", "default")
-
-    companion object {
-        val invalid = Foo("invalid", "invalid")
-    }
-}
 
 class DiscardJsonDeserializer<T> : JsonDeserializer<Foo>() {
     private fun tryDeserialize(lambdaDeserialize: () -> Foo, data: ByteArray?) = try {

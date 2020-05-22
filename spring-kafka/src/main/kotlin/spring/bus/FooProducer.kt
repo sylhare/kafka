@@ -1,4 +1,4 @@
-package spring
+package spring.bus
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -9,6 +9,7 @@ import org.springframework.messaging.handler.annotation.Payload
 import org.springframework.messaging.support.MessageBuilder
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
+import spring.entity.Foo
 
 @Component
 class FooProducer {
