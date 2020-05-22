@@ -10,7 +10,7 @@ class FooConsumer {
     val foos = mutableListOf<Foo>()
     @KafkaListener(
         id = "foo-consumer",
-        topics = ["\${app.topic.example}"]
+        topics = ["\${app.topic.consumer}"]
     )
 
     fun consume(@Payload foo: Foo) {

@@ -16,7 +16,7 @@ class FooProducer {
   @Autowired
   private lateinit var kafkaTemplate: KafkaTemplate<String, Foo>
 
-  @Value("\${app.topic.example}")
+  @Value("\${app.topic.producer}")
   private lateinit var topic: String
 
   fun send(@Payload data: Foo) {

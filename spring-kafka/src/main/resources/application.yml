@@ -15,7 +15,8 @@ logback:
 
 app:
   topic:
-    example: "example.topic"
+    producer: "producer.topic"
+    consumer: "consumer.topic"
 
 management:
   server:
@@ -30,4 +31,8 @@ logging:
     org.springframework.web: INFO
     com.memorynotfound: DEBUG
 
-source: "https://memorynotfound.com/spring-kafka-json-serializer-deserializer-example/"
+source:
+  - "https://memorynotfound.com/spring-kafka-json-serializer-deserializer-example/"
+  - "https://blog.mimacom.com/testing-apache-kafka-with-spring-boot/"
+  - "https://blog.mimacom.com/testing-apache-kafka-with-spring-boot-junit5/"
+  - "https://docs.spring.io/spring-kafka/reference/html/#annotation-error-handling"
