@@ -2,11 +2,20 @@ spring:
   jmx:
     enabled: true
   kafka:
-    bootstrap-servers: localhost:9092
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: foo-group
+      auto-offset-reset: earliest
+    producer:
+      bootstrap-servers: localhost:9092
+
+logback:
+  rootloglevel: INFO
+  barringLoglevel: DEBUG
 
 app:
   topic:
-    example: example.topic
+    example: "example.topic"
 
 management:
   server:
