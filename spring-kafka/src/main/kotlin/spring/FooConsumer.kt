@@ -1,0 +1,4 @@
+package spring
+
+class FooListener {
+}

@@ -1,0 +1,24 @@
+spring:
+  jmx:
+    enabled: true
+  kafka:
+    bootstrap-servers: localhost:9092
+
+app:
+  topic:
+    example: example.topic
+
+management:
+  server:
+    port: 9621
+  endpoint:
+    health:
+      show-details: "ALWAYS"
+
+logging:
+  level:
+    root: WARN
+    org.springframework.web: INFO
+    com.memorynotfound: DEBUG
+
+source: "https://memorynotfound.com/spring-kafka-json-serializer-deserializer-example/"
