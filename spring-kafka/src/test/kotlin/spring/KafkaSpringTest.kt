@@ -7,8 +7,7 @@ import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
@@ -16,12 +15,11 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory
 import org.springframework.kafka.test.EmbeddedKafkaBroker
 import org.springframework.kafka.test.context.EmbeddedKafka
 import org.springframework.kafka.test.utils.KafkaTestUtils
-import org.springframework.test.context.junit4.SpringRunner
 import spring.bus.FooConsumer
 import spring.bus.FooProducer
+import spring.entity.Foo
 import java.util.*
 
-@RunWith(SpringRunner::class)
 @SpringBootTest(
     properties = [
         "spring.kafka.producer.bootstrap-servers=localhost:3333",
@@ -37,7 +35,7 @@ import java.util.*
         "port=3333",
         "log.dir=out/embedded-kafka"] // Where the embedded kafka writes the logs (gets deleted after)
 )
-internal class BarringTest {
+internal class KafkaSpringTest {
 
     @Autowired
     private lateinit var embeddedKafkaBroker: EmbeddedKafkaBroker
