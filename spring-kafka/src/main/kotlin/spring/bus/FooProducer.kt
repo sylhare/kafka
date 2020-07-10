@@ -17,7 +17,8 @@ class FooProducer {
     private lateinit var topic: String
 
     fun send(@Payload data: Foo) {
-        println("sending data=$data to topic='$topic'")
+        println("sending data:$data to topic:'$topic'")
         kafkaTemplate.send(topic, "key", data)
+        println("Foo should be sent")
     }
 }

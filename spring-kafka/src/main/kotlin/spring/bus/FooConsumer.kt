@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component
 import spring.entity.Foo
 
 @KafkaListener(
-    id = "foo-consumer",
-    // groupId = "foo-group",
+    //id = "foo-consumer",
+    groupId = "foo-group",
     topics = ["\${app.topic.consumer}"]
 )
 @Component
@@ -16,13 +16,11 @@ class FooConsumer {
 
     val foos = mutableListOf<Foo>()
 
-
     @KafkaHandler
     fun consume(@Payload foo: Foo) {
         println("Consuming Request: $foo")
         foos.add(foo)
-        println(foos)
+        println("All recieved: $foos")
     }
-
 
 }

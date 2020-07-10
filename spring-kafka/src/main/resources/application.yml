@@ -3,7 +3,7 @@ spring:
     consumer:
       bootstrap-servers: localhost:9092
       group-id: foo-group
-      auto-offset-reset: latest
+      auto-offset-reset: earliest
       properties:
         spring.json.trusted.packages: "spring.entity"
         spring.json.value.default.type: "spring.entity.Foo"

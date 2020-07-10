@@ -7,6 +7,8 @@ import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -15,10 +17,12 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory
 import org.springframework.kafka.test.EmbeddedKafkaBroker
 import org.springframework.kafka.test.context.EmbeddedKafka
 import org.springframework.kafka.test.utils.KafkaTestUtils
+import org.springframework.test.annotation.DirtiesContext
 import spring.bus.FooConsumer
 import spring.bus.FooProducer
 import spring.entity.Foo
 import java.util.*
+
 
 @SpringBootTest(
     properties = [
@@ -26,9 +30,11 @@ import java.util.*
         "spring.kafka.consumer.bootstrap-servers=localhost:3333"
     ]
 )
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD) // To reset kafka in between tests
 @EmbeddedKafka(
     topics = ["producer.topic", "consumer.topic"],
     partitions = 1,
+    controlledShutdown = false,
     brokerProperties = [
         "advertised.listeners=PLAINTEXT://localhost:3333",
         "listeners=PLAINTEXT://localhost:3333",
@@ -47,39 +53,52 @@ internal class KafkaSpringTest {
     private lateinit var fooProducer: FooProducer
 
     @Test
-    fun producerTest() {
-        println("\nproducer Test")
-        val mockConsumer: Consumer<String, String> = setupMockConsumer()
+    fun selfProduceConsumeTest() {
+        println("\n------- Self Produce Consume Test -------")
+        val consumer: Consumer<String, String> = setupTestConsumer()
+        val producer: Producer<String, String> = setupTestProducer()
 
-        fooProducer.send(Foo("foo", "bar"))
+        println("Sending \"my-test-value\"")
+        producer.send(ProducerRecord("producer.topic", "123", "my-test-value"))
 
-        val record: ConsumerRecord<String, String>? = null
-        //    KafkaTestUtils.getSingleRecord<String, String>(consumer, "producer.topic", 1000)
-        println("Total records ${KafkaTestUtils.getRecords(mockConsumer, 1000).count()}")
-        println("Record received $record")
-        //assertEquals("{\"name\":\"foo\", \"description\":\"bar\"}", record.value())
+        val singleRecord = KafkaTestUtils.getSingleRecord(consumer, "producer.topic")
+        assertEquals("my-test-value", singleRecord.value())
+        assertEquals("123", singleRecord.key())
+
+        consumer.close()
+        producer.close()
     }
 
     @Test
-    fun consumerTest() {
-        println("\nConsumer Test")
-        val producer: Producer<String, String> = setupProducer()
-        println("Sending \"{\"name\":\"mockFoo\", \"description\":\"mockBar\"}\"")
-        producer.send(
-            ProducerRecord(
-                "consumer.topic",
-                "key",
-                "{\"name\":\"mockFoo\", \"description\":\"mockBar\"}"
-            )
-        )
-        producer.flush()
-        println("Foo received: ${fooConsumer.foos}")
+    fun producerTest() {
+        println("\n------- producer Test -------")
+        val consumer: Consumer<String, String> = setupTestConsumer()
+
+        fooProducer.send(Foo("foo", "bar"))
+        Thread.sleep(500)
+        val record: ConsumerRecord<String, String> = KafkaTestUtils.getSingleRecord<String, String>(consumer, "producer.topic", 1000)
+        println("Record received $record")
+        assertEquals("key", record.key())
+
+        consumer.close()
     }
 
-    private fun setupMockConsumer(): Consumer<String, String> {
-        val config = KafkaTestUtils.consumerProps("consumer", "false", embeddedKafkaBroker)
-        config[ConsumerConfig.GROUP_ID_CONFIG] = UUID.randomUUID().toString()
-        config[ConsumerConfig.CLIENT_ID_CONFIG] = "your_client_id"
+    @Test
+    fun consumeTest() {
+        println("\n------- Consumer Test -------")
+        val producer: Producer<String, String> = setupTestProducer()
+
+        println("Sending \"{\"name\":\"mockFoo\", \"description\":\"mockBar\"}\"")
+        producer.send(ProducerRecord("consumer.topic", "key2", "{\"name\":\"mockFoo\", \"description\":\"mockBar\"}"))
+        producer.flush()
+        Thread.sleep(500)
+        assertEquals(Foo("mockFoo", "mockBar"), fooConsumer.foos.first())
+
+        producer.close()
+    }
+    
+    private fun setupTestConsumer(): Consumer<String, String> {
+        val config = KafkaTestUtils.consumerProps("${UUID.randomUUID()}", "false", embeddedKafkaBroker)
         config[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "earliest"
         val consumer: Consumer<String, String> = DefaultKafkaConsumerFactory(
             config,
@@ -90,7 +109,7 @@ internal class KafkaSpringTest {
         return consumer
     }
 
-    private fun setupProducer() = DefaultKafkaProducerFactory(
+    private fun setupTestProducer() = DefaultKafkaProducerFactory(
         KafkaTestUtils.producerProps(embeddedKafkaBroker),
         StringSerializer(),
         StringSerializer()
