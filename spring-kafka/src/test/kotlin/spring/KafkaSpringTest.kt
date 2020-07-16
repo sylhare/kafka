@@ -53,6 +53,11 @@ internal class KafkaSpringTest {
     private lateinit var fooProducer: FooProducer
 
     @Test
+    fun fooTest() {
+        assertEquals("default", Foo().name)
+    }
+
+    @Test
     fun selfProduceConsumeTest() {
         println("\n------- Self Produce Consume Test -------")
         val consumer: Consumer<String, String> = setupTestConsumer()
@@ -61,7 +66,7 @@ internal class KafkaSpringTest {
         println("Sending \"my-test-value\"")
         producer.send(ProducerRecord("producer.topic", "123", "my-test-value"))
 
-        val singleRecord = KafkaTestUtils.getSingleRecord(consumer, "producer.topic")
+        val singleRecord = KafkaTestUtils.getSingleRecord(consumer, "producer.topic", 1000)
         assertEquals("my-test-value", singleRecord.value())
         assertEquals("123", singleRecord.key())
 
@@ -96,7 +101,7 @@ internal class KafkaSpringTest {
 
         producer.close()
     }
-    
+
     private fun setupTestConsumer(): Consumer<String, String> {
         val config = KafkaTestUtils.consumerProps("${UUID.randomUUID()}", "false", embeddedKafkaBroker)
         config[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "earliest"

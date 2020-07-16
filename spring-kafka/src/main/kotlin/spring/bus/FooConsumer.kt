@@ -2,6 +2,8 @@ package spring.bus
 
 import org.springframework.kafka.annotation.KafkaHandler
 import org.springframework.kafka.annotation.KafkaListener
+import org.springframework.kafka.support.KafkaHeaders
+import org.springframework.messaging.handler.annotation.Header
 import org.springframework.messaging.handler.annotation.Payload
 import org.springframework.stereotype.Component
 import spring.entity.Foo
@@ -9,7 +11,8 @@ import spring.entity.Foo
 @KafkaListener(
     //id = "foo-consumer",
     groupId = "foo-group",
-    topics = ["\${app.topic.consumer}"]
+    topics = ["\${app.topic.consumer}"],
+    containerFactory = "fooKafkaListenerContainerFactory"
 )
 @Component
 class FooConsumer {
@@ -17,8 +20,8 @@ class FooConsumer {
     val foos = mutableListOf<Foo>()
 
     @KafkaHandler
-    fun consume(@Payload foo: Foo) {
-        println("Consuming Request: $foo")
+    fun consume(@Header(KafkaHeaders.RECEIVED_TIMESTAMP) received: Long, @Payload foo: Foo) {
+        println("Consuming Request: $foo received at $received")
         foos.add(foo)
         println("All recieved: $foos")
     }
