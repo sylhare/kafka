@@ -1,0 +1,11 @@
+{
+  "namespace": "com.github.event",
+  "type": "record",
+  "name": "Custom",
+  "fields": [
+    {
+      "name": "isEnabled",
+      "type": "boolean"
+    }
+  ]
+}

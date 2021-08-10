@@ -1,0 +1,15 @@
+{
+  "namespace": "com.github.event",
+  "type": "record",
+  "name": "Example",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "custom",
+      "type": "com.github.event.Custom"
+    }
+  ]
+}
