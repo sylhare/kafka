@@ -1,4 +1,4 @@
-package spring.bus
+package spring.kafka.consumers
 
 import org.springframework.kafka.annotation.KafkaHandler
 import org.springframework.kafka.annotation.KafkaListener
