@@ -1,6 +1,6 @@
 // Setup node kafka
-require("./kafka");
-//require("./kafka-avro");
+require('./kafka');
+// require('./kafka-avro');
 
 // Setup basic express server
 const express = require('express');
