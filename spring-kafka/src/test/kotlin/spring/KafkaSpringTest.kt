@@ -8,7 +8,6 @@ import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -18,11 +17,10 @@ import org.springframework.kafka.test.EmbeddedKafkaBroker
 import org.springframework.kafka.test.context.EmbeddedKafka
 import org.springframework.kafka.test.utils.KafkaTestUtils
 import org.springframework.test.annotation.DirtiesContext
-import spring.bus.FooConsumer
-import spring.bus.FooProducer
 import spring.entity.Foo
+import spring.kafka.FooProducer
+import spring.kafka.consumers.FooConsumer
 import java.util.*
-
 
 @SpringBootTest(
     properties = [
@@ -44,13 +42,13 @@ import java.util.*
 internal class KafkaSpringTest {
 
     @Autowired
-    private lateinit var embeddedKafkaBroker: EmbeddedKafkaBroker
-
-    @Autowired
     private lateinit var fooConsumer: FooConsumer
 
     @Autowired
     private lateinit var fooProducer: FooProducer
+
+    @Autowired
+    private lateinit var embeddedKafkaBroker: EmbeddedKafkaBroker
 
     @Test
     fun fooTest() {
