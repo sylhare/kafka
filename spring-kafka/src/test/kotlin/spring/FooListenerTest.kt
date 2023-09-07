@@ -16,7 +16,7 @@ import spring.entity.Foo
 import spring.kafka.FooProducer
 import spring.service.FooService
 
-@ActiveProfiles(profiles=["kafka-test"])
+@ActiveProfiles(profiles = ["kafka-test"])
 @SpringBootTest(
     properties = [
         "spring.kafka.producer.bootstrap-servers=localhost:3392",
@@ -30,7 +30,7 @@ import spring.service.FooService
 internal class FooListenerTest {
 
     @TestConfiguration
-    open class ControllerTestConfig {
+    open class TestConfig {
         @Bean
         open fun fooService() = mockk<FooService>()
     }

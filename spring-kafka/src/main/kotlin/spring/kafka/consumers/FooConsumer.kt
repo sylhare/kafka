@@ -23,7 +23,7 @@ class FooConsumer {
     fun consume(@Header(KafkaHeaders.RECEIVED_TIMESTAMP) received: Long, @Payload foo: Foo) {
         println("Consuming Request: $foo received at $received")
         foos.add(foo)
-        println("All recieved: $foos")
+        println("All received: $foos")
     }
 
 }
