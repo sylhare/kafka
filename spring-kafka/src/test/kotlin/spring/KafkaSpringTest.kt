@@ -79,7 +79,8 @@ internal class KafkaSpringTest {
 
         fooProducer.send(Foo("foo", "bar"))
         Thread.sleep(500)
-        val record: ConsumerRecord<String, String> = KafkaTestUtils.getSingleRecord<String, String>(consumer, "producer.topic", 1000)
+        val record: ConsumerRecord<String, String> =
+            KafkaTestUtils.getSingleRecord<String, String>(consumer, "producer.topic", 1000)
         println("Record received $record")
         assertEquals("key", record.key())
 
