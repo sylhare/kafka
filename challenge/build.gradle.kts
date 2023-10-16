@@ -1,20 +1,11 @@
+import com.github.davidmc24.gradle.plugin.avro.GenerateAvroJavaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-
-/** Avro plugin for v0.9.1 or more
-buildscript {
-  dependencies {
-
-    classpath("com.commercehub.gradle.plugin:gradle-avro-plugin:0.16.0")
-  }
-}
-
-apply(plugin = "com.commercehub.gradle.plugin.avro")
-*/
 
 plugins {
   kotlin("jvm") version "1.3.50"
-  id("com.commercehub.gradle.plugin.avro") version "0.9.1"
+  java
+  //id("com.commercehub.gradle.plugin.avro") version "0.9.1"
+  id( "com.github.davidmc24.gradle.plugin.avro-base") version "1.2.0"
   `maven-publish`
   application
 }
@@ -26,20 +17,20 @@ repositories {
   jcenter()
   mavenCentral()
   maven("http://packages.confluent.io/maven/")
-  maven("https://dl.bintray.com/gradle/gradle-plugins")
+  gradlePluginPortal()
 }
 
 dependencies {
   implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0")
   implementation("org.apache.kafka:kafka-clients:2.3.0")
   implementation("org.apache.kafka:kafka-streams:2.3.0")
-  implementation("org.apache.avro:avro:1.9.2")
-  implementation("org.apache.avro:avro-tools:1.9.2"){
+  implementation("org.apache.avro:avro:1.10.2")
+  implementation("org.apache.avro:avro-tools:1.10.2"){
     exclude("ch.qos.logback", "logback-classic")
   }
 
   implementation("io.confluent:monitoring-interceptors:5.3.0")
-  implementation("io.confluent:kafka-avro-serializer:5.3.0")
+  implementation("io.confluent:kafka-avro-serializer:5.5.1")
   implementation("io.confluent:kafka-serde-tools-package:5.3.0")
 
   implementation("org.slf4j:slf4j-log4j12:1.7.25")
@@ -90,8 +81,24 @@ tasks.withType<KotlinCompile> {
   dependsOn("generateAvroJava") // So avro is generated
 }
 
+avro {
+  isCreateSetters.set(false)
+  isCreateOptionalGetters.set(false)
+  isGettersReturnOptional.set(false)
+  isOptionalGettersForNullableFieldsOnly.set(false)
+  fieldVisibility.set("PUBLIC_DEPRECATED")
+  outputCharacterEncoding.set("UTF-8")
+  stringType.set("String")
+  templateDirectory.set(null as String?)
+  isEnableDecimalLogicalType.set(true)
+}
 
-tasks.create<Exec>("avro") {
+tasks.register<GenerateAvroJavaTask>("generateAvroJava") {
+  source("src/main/avro")
+  setOutputDir(file("build/generated-main-avro-java"))
+}
+
+tasks.create<Exec>("avro") { // Simpler task to generate avro schemas
   dependsOn("generateAvroJava")
   commandLine = listOf("echo", "avro")
 }
