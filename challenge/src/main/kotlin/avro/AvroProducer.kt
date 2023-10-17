@@ -13,12 +13,12 @@ import java.util.*
 fun main(args: Array<String>) {
   println("*** Starting VP Producer ***")
   val producer: KafkaProducer<PositionKey, PositionValue> = kafkaAvroProducer()
-  Runtime.getRuntime().addShutdownHook(Thread(Runnable {
-    println("### Stopping VP Producer ###")
-    producer.close()
-  }))
   val subscriber = AvroSubscriber(producer)
   subscriber.start()
+    Runtime.getRuntime().addShutdownHook(Thread {
+        println("### Stopping VP Producer ###")
+        producer.close()
+    })
 }
 
 private fun kafkaAvroProducer(): KafkaProducer<PositionKey, PositionValue> {
