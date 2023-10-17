@@ -1,12 +1,13 @@
 package avro
 
+import avro.model.PositionKey
+import avro.model.PositionValue
 import io.confluent.kafka.serializers.KafkaAvroSerializer
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig
+import io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.eclipse.paho.client.mqttv3.MqttException
-import avro.model.PositionKey
-import avro.model.PositionValue
 import java.util.*
 
 @Throws(MqttException::class)
