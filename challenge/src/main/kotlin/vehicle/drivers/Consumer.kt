@@ -1,32 +1,31 @@
-package example
+package drivers
 
-import clients.BOOTSTRAP_SERVER
-import clients.KAFKA_TOPIC
-import com.fasterxml.jackson.databind.deser.std.StringDeserializer
 import io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor
 import org.apache.kafka.clients.consumer.ConsumerConfig.*
 import org.apache.kafka.clients.consumer.KafkaConsumer
+import org.apache.kafka.common.serialization.StringDeserializer
 import java.time.Duration
 import java.util.*
 
-class MyTestConsumer {
+fun main(args: Array<String>) {
+  println("Starting Consumer.")
 
-  private val settings = Properties()
-
-  init {
+  if (USE_DRIVER_CONSUMER) {
+    DriverConsumer().consume()
+  } else {
+    // Confluent interceptors
+    // Configure the group id, location of the bootstrap server, default deserializers,
+    val settings = Properties()
     settings[GROUP_ID_CONFIG] = "Consumer"
     settings[BOOTSTRAP_SERVERS_CONFIG] = BOOTSTRAP_SERVER
     settings[AUTO_OFFSET_RESET_CONFIG] = "earliest"
     settings[KEY_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
     settings[VALUE_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
     settings[INTERCEPTOR_CLASSES_CONFIG] = listOf(MonitoringConsumerInterceptor::class.java)
-  }
+    val consumer = KafkaConsumer<String, String>(settings)
 
-  var consumer = KafkaConsumer<String, String>(settings)
-
-  fun consume() {
-    try { // Subscribe to our topic
-      consumer.subscribe(listOf(KAFKA_TOPIC))
+    try {
+      consumer.subscribe(listOf(KAFKA_TOPIC)) // Subscribe to our topic
       while (true) {
         val records = consumer.poll(Duration.ofMillis(100))
         records.forEach {

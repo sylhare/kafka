@@ -1,4 +1,4 @@
-package avro
+package position.avro
 
 import io.confluent.kafka.serializers.KafkaAvroDeserializer
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig

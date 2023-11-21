@@ -1,4 +1,4 @@
-package clients
+package drivers
 
 import io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor
 import org.apache.kafka.clients.producer.KafkaProducer

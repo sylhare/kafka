@@ -1,4 +1,4 @@
-package subscriber
+package position.json
 
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerRecord

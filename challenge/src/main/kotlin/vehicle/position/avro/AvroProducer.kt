@@ -1,4 +1,4 @@
-package avro
+package position.avro
 
 import avro.model.PositionKey
 import avro.model.PositionValue

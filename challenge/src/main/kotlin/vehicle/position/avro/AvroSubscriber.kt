@@ -1,4 +1,4 @@
-package avro
+package position.avro
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.kafka.clients.producer.KafkaProducer

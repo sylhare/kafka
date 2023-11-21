@@ -1,4 +1,4 @@
-package avro
+package position.avro
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
