@@ -1,4 +1,4 @@
-package position.json
+package vehicle.position.json
 
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.consumer.ConsumerRecords

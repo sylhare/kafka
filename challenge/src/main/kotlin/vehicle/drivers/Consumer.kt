@@ -1,4 +1,4 @@
-package drivers
+package vehicle.drivers
 
 import io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor
 import org.apache.kafka.clients.consumer.ConsumerConfig.*

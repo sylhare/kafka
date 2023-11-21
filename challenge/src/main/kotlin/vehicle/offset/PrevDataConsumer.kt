@@ -1,4 +1,4 @@
-package offset
+package vehicle.offset
 
 import org.apache.kafka.clients.consumer.ConsumerConfig.*
 import org.apache.kafka.clients.consumer.KafkaConsumer

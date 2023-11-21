@@ -1,4 +1,4 @@
-package position.avro
+package vehicle.position.avro
 
 import avro.model.PositionKey
 import avro.model.PositionValue

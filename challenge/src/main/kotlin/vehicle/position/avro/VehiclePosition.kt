@@ -1,4 +1,4 @@
-package position.avro
+package vehicle.position.avro
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

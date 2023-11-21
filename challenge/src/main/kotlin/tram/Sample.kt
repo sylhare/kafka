@@ -1,4 +1,4 @@
-package json
+package tram
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.apache.kafka.clients.consumer.ConsumerConfig
