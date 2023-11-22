@@ -1,42 +1,40 @@
 #!/usr/bin/env bash
 echo Waiting for Kafka to be ready...
 
-cub kafka-ready -b kafka:9092 1 300
-
 echo Creating the topics...
 
-kafka-topics --zookeeper zookeeper:2181 \
+kafka-topics --bootstrap-server localhost:9092 \
     --create \
     --topic vehicle-positions \
     --partitions 6 \
     --replication-factor 1
 
-kafka-topics --zookeeper zookeeper:2181 \
+kafka-topics --bootstrap-server localhost:9092 \
     --create \
     --topic vehicle-positions-avro \
     --partitions 6 \
     --replication-factor 1
 
-kafka-topics --zookeeper zookeeper:2181 \
+kafka-topics --bootstrap-server localhost:9092 \
     --create \
     --topic operators \
     --partitions 1 \
     --replication-factor 1
 
-kafka-topics --zookeeper zookeeper:2181 \
+kafka-topics --bootstrap-server localhost:9092 \
     --create \
     --topic vehicle-positions-oper-47 \
     --partitions 6 \
     --replication-factor 1
 
-kafka-topics --zookeeper zookeeper:2181 \
+kafka-topics --bootstrap-server localhost:9092 \
     --create \
     --topic tram-door-status-changed \
     --partitions 6 \
     --replication-factor 1
 
 cat << EOF | kafka-console-producer \
-    --broker-list kafka:9092 \
+    --broker-list localhost:9092 \
     --topic operators \
     --property "parse.key=true" \
     --property "key.separator=,"\
