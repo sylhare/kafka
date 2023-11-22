@@ -1,4 +1,5 @@
-{"namespace": "avro.model",
+{
+    "namespace": "avro.model",
     "type": "record",
     "name": "PositionValue",
     "fields": [
