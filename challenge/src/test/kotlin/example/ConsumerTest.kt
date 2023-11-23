@@ -24,7 +24,7 @@ class ConsumerTest {
   @Test
   fun subscribeConsumerTest() {
     val mockService = MockService()
-    val exampleConsumer = ExampleConsumer(topic, mockConsumer, mockService)
+    val exampleConsumer = ExampleConsumer(mockConsumer, mockService)
     exampleConsumer.subscribe(topic)                                    // subscribe to a consumer group
     mockConsumer.rebalance(listOf(TopicPartition(topic, partition)))    // "rebalance" records to that group
     mockConsumer.updateBeginningOffsets(mapOf(TopicPartition(topic, partition) to 0L))
@@ -38,7 +38,7 @@ class ConsumerTest {
   @Test
   fun noSubscribeConsumerTest() {
     val mockService = MockService()
-    val exampleConsumer = ExampleConsumer(topic, mockConsumer, mockService)
+    val exampleConsumer = ExampleConsumer(mockConsumer, mockService)
     mockConsumer.assign(listOf(TopicPartition(topic, partition)))     // Assign consumer to a topic to add the records to
     mockConsumer.updateBeginningOffsets(mapOf(TopicPartition(topic, partition) to 0L))
     exampleConsumer.poll()

@@ -18,7 +18,7 @@ class ProducerTest {
 
   @Test
   fun producerSendsDataTest() {
-    val exampleProducer = ExampleProducer(topic, mockProducer)
+    val exampleProducer = ExampleProducer(mockProducer)
     exampleProducer.send(producerRecord)
     assertEquals(listOf(producerRecord), mockProducer.history())
   }

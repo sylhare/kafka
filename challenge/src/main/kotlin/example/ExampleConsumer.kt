@@ -4,7 +4,7 @@ import org.apache.kafka.clients.consumer.Consumer
 import java.time.Duration
 import kotlin.concurrent.thread
 
-class ExampleConsumer(topic: String, private val consumer: Consumer<String, String>, private val service: Service) {
+class ExampleConsumer(private val consumer: Consumer<String, String>, private val service: Service) {
 
   private var running: Boolean = true
 
