@@ -21,16 +21,16 @@ repositories {
 }
 
 dependencies {
-  implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0")
-  implementation("org.apache.kafka:kafka-clients:2.3.0")
-  implementation("org.apache.kafka:kafka-streams:2.3.0")
-  implementation("org.apache.avro:avro:1.10.2")
-  implementation("org.apache.avro:avro-tools:1.10.2"){
+  implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.1")
+  implementation("org.apache.kafka:kafka-clients:2.5.0")
+  implementation("org.apache.kafka:kafka-streams:2.5.0")
+  implementation("org.apache.avro:avro:1.11.1")
+  implementation("org.apache.avro:avro-tools:1.11.1"){
     exclude("ch.qos.logback", "logback-classic")
   }
 
   implementation("io.confluent:monitoring-interceptors:5.3.0")
-  implementation("io.confluent:kafka-avro-serializer:5.5.1")
+  implementation("io.confluent:kafka-avro-serializer:5.5.2")
   implementation("io.confluent:kafka-serde-tools-package:5.3.0")
 
   implementation("org.slf4j:slf4j-log4j12:1.7.25")
