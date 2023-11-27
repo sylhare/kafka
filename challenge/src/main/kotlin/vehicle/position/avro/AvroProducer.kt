@@ -7,10 +7,8 @@ import io.confluent.kafka.serializers.KafkaAvroSerializerConfig
 import io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerConfig
-import org.eclipse.paho.client.mqttv3.MqttException
 import java.util.*
 
-@Throws(MqttException::class)
 fun main(args: Array<String>) {
     println("*** Starting VP Producer ***")
     val producer: KafkaProducer<PositionKey, PositionValue> = kafkaAvroProducer()

@@ -3,7 +3,7 @@
 Example with kafka consumer, producer, stream and avro in Kotlin.
 There are a couple of examples about:
 - a tram (trains) system where the status of the door is being open or closed
-- the position of a fleet of vehicles and drivers (with examples both in json, avro).
+- the position of a fleet of vehicles and drivers.
 - a basic producer/consumer using a service class and how to test it.
 
 ### Get started
