@@ -1,11 +1,16 @@
-package clients.fixture
-
 import kafka.server.KafkaConfig
 import kafka.server.KafkaServerStartable
 import org.apache.curator.test.TestingServer
 import java.io.IOException
 import java.util.*
 
+/**
+ * @Deprecated: Compatible with kafka v2.5.0
+ *
+ *   // Deprecated: For KafkaTestFixture
+ *   testImplementation("org.apache.curator:curator-test:2.8.0")
+ *   testImplementation("org.apache.kafka:kafka_2.10:0.8.2.1")
+ */
 internal class KafkaTestFixture {
   private lateinit var zk: TestingServer
   private lateinit var kafka: KafkaServerStartable
