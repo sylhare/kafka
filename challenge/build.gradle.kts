@@ -10,28 +10,34 @@ plugins {
   application
 }
 
+val kotlinVersion = "1.3.50"
+val kafkaVersion = "3.2.3"
+val avroVersion = "1.11.3"
+val confluentVersion = "7.2.1"
+
 java.sourceCompatibility = JavaVersion.VERSION_1_8
-application.mainClassName = "subscriber.VehiclePositionProducerKt"
 
 repositories {
-  jcenter()
   mavenCentral()
-  maven("http://packages.confluent.io/maven/")
+  maven("https://packages.confluent.io/maven/")
   gradlePluginPortal()
 }
 
 dependencies {
   implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.1")
-  implementation("org.apache.kafka:kafka-clients:2.5.0")
-  implementation("org.apache.kafka:kafka-streams:2.5.0")
-  implementation("org.apache.avro:avro:1.11.1")
-  implementation("org.apache.avro:avro-tools:1.11.1"){
+  implementation("org.apache.kafka:kafka_2.13:${kafkaVersion}")
+  implementation("org.apache.kafka:kafka-clients:${kafkaVersion}")
+  implementation("org.apache.kafka:kafka-streams:${kafkaVersion}")
+  implementation("org.apache.avro:avro:${avroVersion}")
+  implementation("org.apache.avro:avro-tools:${avroVersion}"){
     exclude("ch.qos.logback", "logback-classic")
   }
 
-  implementation("io.confluent:monitoring-interceptors:5.3.0")
-  implementation("io.confluent:kafka-avro-serializer:5.5.2")
-  implementation("io.confluent:kafka-serde-tools-package:5.3.0")
+  implementation("io.confluent:monitoring-interceptors:${confluentVersion}")
+  implementation("io.confluent:kafka-avro-serializer:${confluentVersion}")
+  implementation("io.confluent:kafka-json-serializer:${confluentVersion}")
+  implementation("io.confluent:kafka-streams-avro-serde:${confluentVersion}")
+  implementation("io.confluent:kafka-schema-registry-client:${confluentVersion}")
 
   implementation("org.slf4j:slf4j-log4j12:1.7.25")
 
@@ -41,9 +47,7 @@ dependencies {
   testImplementation(kotlin("test"))
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.2.0")
   testImplementation("org.junit.jupiter:junit-jupiter-engine:5.2.0")
-  testImplementation("org.apache.curator:curator-test:2.8.0")
-  testImplementation("org.apache.kafka:kafka_2.10:0.8.2.1")
-
+  testImplementation("org.apache.kafka:kafka-streams-test-utils:${kafkaVersion}")
 }
 
 configurations.all {
