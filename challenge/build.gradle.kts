@@ -34,8 +34,8 @@ dependencies {
   }
 
   implementation("io.confluent:monitoring-interceptors:${confluentVersion}")
-  implementation("io.confluent:kafka-avro-serializer:${confluentVersion}")
   implementation("io.confluent:kafka-json-serializer:${confluentVersion}")
+  implementation("io.confluent:kafka-avro-serializer:${confluentVersion}")
   implementation("io.confluent:kafka-streams-avro-serde:${confluentVersion}")
   implementation("io.confluent:kafka-schema-registry-client:${confluentVersion}")
 
