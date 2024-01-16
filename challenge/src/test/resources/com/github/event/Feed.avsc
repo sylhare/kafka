@@ -1,0 +1,22 @@
+{
+  "namespace": "com.github.event",
+  "type": "record",
+  "name": "Feed",
+  "fields": [
+    {
+      "name": "user",
+      "type": "string"
+    },
+    {
+      "name": "is_new",
+      "type": "boolean"
+    },
+    {
+      "name": "content",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  ]
+}
