@@ -12,12 +12,12 @@ import org.apache.kafka.streams.kstream.KStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig;
+import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
 import io.confluent.kafka.serializers.subject.RecordNameStrategy;
 import io.confluent.kafka.streams.serdes.avro.GenericAvroSerde;
 
 /**
- * https://github.com/findinpath/kafka-streams-generic-avro/blob/master/src/main/java/com/findinpath/GenericRecordTopology.java
+ * Inspired by {@link <a href="https://github.com/findinpath/kafka-streams-generic-avro/blob/master/src/main/java/com/findinpath/GenericRecordTopology.java">findinpath/kafka-streams-generic-avro</a>
  * Simple kafka-streams stateless topology used for showcasing on how to consume
  * several event types from the same input topic.
  * <p>
@@ -67,11 +67,11 @@ public class GenericRecordTopology implements AutoCloseable {
         streamsConfiguration.put(StreamsConfig.APPLICATION_ID_CONFIG, applicationId);
         // Where to find Kafka broker(s).
         streamsConfiguration.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        streamsConfiguration.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl);
+        streamsConfiguration.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl);
         // Specify default (de)serializers for record keys and for record values.
         streamsConfiguration.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         streamsConfiguration.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, GenericAvroSerde.class);
-        streamsConfiguration.put(AbstractKafkaAvroSerDeConfig.VALUE_SUBJECT_NAME_STRATEGY, RecordNameStrategy.class);
+        streamsConfiguration.put(AbstractKafkaSchemaSerDeConfig.VALUE_SUBJECT_NAME_STRATEGY, RecordNameStrategy.class);
 
         return streamsConfiguration;
     }

@@ -54,10 +54,13 @@ class SerDesTest {
             configure(mapOf(KafkaAvroDeserializerConfig.SCHEMA_REGISTRY_URL_CONFIG to registryUrl), false)
         }.deserializer()
 
+        // Avro serializer with specific serializer
         val specificBytes = specificSerializer.serialize("topic", example)
+        // Obtained generic record from deserializer
         val deserialized = genericDeserializer.deserialize("topic", specificBytes)
+        // Cast from a generic record to a specific record using generated class from avro schema
         val deserializedExample = SpecificData.get().deepCopy(Example.`SCHEMA$`, deserialized)
-        assertEquals(deserialized.schema.name, "Example")
+        assertEquals(deserialized.schema.name, Example.getClassSchema().name)
         assertTrue(deserializedExample is Example)
         assertEquals(example, deserializedExample)
     }
